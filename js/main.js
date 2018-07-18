@@ -377,6 +377,59 @@
         });
     };
 
+    /* Registration Form
+     * ------------------------------------------------------ */
+    var clRegistrationForm = function () {
+
+        /* local validation */
+        $('#registrationForm').validate({
+
+            /* submit via ajax */
+            submitHandler: function (form) {
+
+                var sLoader = $('.submit-loader');
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "https://zabittech.herokuapp.com/training",
+                    data: $(form).serialize(),
+                    beforeSend: function () {
+
+                        sLoader.slideDown("slow");
+
+                    },
+                    success: function (msg) {
+
+                        // Message was sent
+                        if (msg == 'OK') {
+                            sLoader.slideUp("slow");
+                            $('.message-warning').fadeOut();
+                            $('#registrationForm').fadeOut();
+                            $('.message-success').fadeIn();
+                        }
+                        // There was an error
+                        else {
+                            sLoader.slideUp("slow");
+                            $('.message-warning').html(msg);
+                            $('.message-warning').slideDown("slow");
+                        }
+
+                    },
+                    error: function () {
+
+                        sLoader.slideUp("slow");
+                        $('.message-warning').html("Something went wrong. Please try again.");
+                        $('.message-warning').slideDown("slow");
+
+                    }
+
+                });
+            }
+
+        });
+    };
+
 
     /* Animate On Scroll
      * ------------------------------------------------------ */
@@ -463,6 +516,7 @@
         clPlaceholder();
         clAlertBoxes();
         clContactForm();
+        clRegistrationForm();
         clAOS();
         clAjaxChimp();
         clBackToTop();
