@@ -392,7 +392,7 @@
                 $.ajax({
 
                     type: "POST",
-                    url: "https://zabittech.herokuapp.com/training",
+                    url: "https://zabittech.herokuapp.com/training.php",
                     data: $(form).serialize(),
                     beforeSend: function () {
 
